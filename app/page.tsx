@@ -21,7 +21,7 @@ export default function Page() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ question, storeId }),
+        body: JSON.stringify({ query: `${question}` }),
       });
 
       const data = await response.json();
