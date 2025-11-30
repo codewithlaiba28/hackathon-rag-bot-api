@@ -9,7 +9,7 @@ const searchGeminiStore = tool({
     name: 'search_gemini_store',
     description: 'Search the uploaded documents in the Gemini File Store for answers.',
     parameters: z.object({
-        query: z.string().describe('The question or query to search for in the documents.'),
+        query: z.string().describe('The question or query to search for in the book.'),
     }),
     execute: async ({ query }) => {
         const result = await generateAnswer(query);
@@ -24,7 +24,7 @@ const searchGeminiStore = tool({
 // Define the Agent
 export const ragAgent = new Agent({
     name: 'RAG Assistant',
-    instructions: `You are a helpful assistant designed to answer questions based on uploaded documents.
+    instructions: `You are a helpful assistant designed to answer questions based on uploaded book.
   
   Your primary tool is 'search_gemini_store'.
   
