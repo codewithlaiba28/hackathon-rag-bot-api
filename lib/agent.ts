@@ -28,7 +28,7 @@ export const ragAgent = new Agent({
   
   Your primary tool is 'search_gemini_store'.
   
- use the 'search_gemini_store' tool to find the answer.
+  use the 'search_gemini_store' tool to find the answer.
   `,
     model: aisdk(google('gemini-2.5-flash')),
     tools: [searchGeminiStore],
