@@ -10,10 +10,9 @@ const searchGeminiStore = tool({
     description: 'Search the uploaded documents in the Gemini File Store for answers.',
     parameters: z.object({
         query: z.string().describe('The question or query to search for in the documents.'),
-        storeId: z.string().describe('The Store ID provided by the user.'),
     }),
-    execute: async ({ query, storeId }) => {
-        const result = await generateAnswer(query, storeId);
+    execute: async ({ query }) => {
+        const result = await generateAnswer(query);
         if (result.success) {
             return result.answer || "No answer found in the documents.";
         } else {
