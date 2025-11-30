@@ -1,0 +1,40 @@
+import { Agent, tool } from '@openai/agents';
+import { aisdk } from '@openai/agents-extensions';
+import { google } from '@ai-sdk/google';
+import { z } from 'zod';
+import { generateAnswer } from './gemini';
+
+// Define the tool to search the Gemini File Store
+const searchGeminiStore = tool({
+    name: 'search_gemini_store',
+    description: 'Search the uploaded documents in the Gemini File Store for answers.',
+    parameters: z.object({
+        query: z.string().describe('The question or query to search for in the documents.'),
+        storeId: z.string().describe('The Store ID provided by the user.'),
+    }),
+    execute: async ({ query, storeId }) => {
+        const result = await generateAnswer(query, storeId);
+        if (result.success) {
+            return result.answer || "No answer found in the documents.";
+        } else {
+            return `Error searching documents: ${result.error}`;
+        }
+    },
+});
+
+// Define the Agent
+export const ragAgent = new Agent({
+    name: 'RAG Assistant',
+    instructions: `You are a helpful assistant designed to answer questions based on uploaded documents.
+  
+  Your primary tool is 'search_gemini_store'.
+  
+  CRITICAL INSTRUCTION:
+  You CANNOT answer questions about the documents without a 'storeId'.
+  If the user asks a question but has not provided a 'storeId' (or you don't have it in context), you MUST ask them to provide it.
+  
+  Once you have the 'storeId', use the 'search_gemini_store' tool to find the answer.
+  `,
+    model: aisdk(google('gemini-2.5-flash')),
+    tools: [searchGeminiStore],
+});
