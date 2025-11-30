@@ -29,11 +29,7 @@ export const ragAgent = new Agent({
   
   Your primary tool is 'search_gemini_store'.
   
-  CRITICAL INSTRUCTION:
-  You CANNOT answer questions about the documents without a 'storeId'.
-  If the user asks a question but has not provided a 'storeId' (or you don't have it in context), you MUST ask them to provide it.
-  
-  Once you have the 'storeId', use the 'search_gemini_store' tool to find the answer.
+ use the 'search_gemini_store' tool to find the answer.
   `,
     model: aisdk(google('gemini-2.5-flash')),
     tools: [searchGeminiStore],
