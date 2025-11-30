@@ -2,6 +2,7 @@ import { ragAgent } from "@/lib/agent";
 import { run } from '@openai/agents';
 import { NextResponse } from "next/server";
 
+export const maxDuration = 60;
 export async function POST(request: Request) {
     try {
         const body = await request.json();
