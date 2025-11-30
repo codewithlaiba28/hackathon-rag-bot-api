@@ -26,7 +26,7 @@ export async function uploadFileToGemini(file: File) {
 
         const operation = await ai.fileSearchStores.uploadToFileSearchStore({
             file: file as unknown as Blob,
-            fileSearchStoreName: storeResult.storeName,
+            fileSearchStoreName: "fileSearchStores/ragfilestore-tw7ieckhbt3j",
             config: {
                 displayName: file.name,
             },
@@ -47,7 +47,7 @@ export async function uploadFileToGemini(file: File) {
 
 export async function generateAnswer(question: string) {
     try {
-        const storeName = "fileSearchStores/ragfilestore-tw7ieckhbt3j";
+       
 
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
@@ -56,7 +56,7 @@ export async function generateAnswer(question: string) {
                 tools: [
                     {
                         fileSearch: {
-                            fileSearchStoreNames: [storeName],
+                            fileSearchStoreNames: ["fileSearchStores/ragfilestore-tw7ieckhbt3j"],
                         },
                     },
                 ],
